@@ -38,6 +38,7 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
     return Scaffold(
       appBar: AppBar(
         title: Text("WhatsApp"),
+        backgroundColor: Colors.green,
         elevation: 0.7,
         bottom: TabBar(
           controller: _tabController,
@@ -77,7 +78,11 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
                 Icons.message,
                 color: Colors.white,
               ),
-              onPressed: () => print("open chats"),
+              onPressed: () {
+               print("open chats");
+               setState(() {
+               });
+              }
             )
           : null,
     );

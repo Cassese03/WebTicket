@@ -31,7 +31,13 @@ List<ChatModel> dummyData = [
       message: "I'm good!",
       time: "10:30",
       avatarUrl:
-          "http://www.usanetwork.com/sites/usanetwork/files/styles/629x720/public/suits_cast_harvey.jpg?itok=fpTOeeBb"),
+      "http://www.usanetwork.com/sites/usanetwork/files/styles/629x720/public/suits_cast_harvey.jpg?itok=fpTOeeBb"),
+  new ChatModel(
+      name: "Lorenzo",
+      message: "Wewewe",
+      time: "17:20",
+      avatarUrl:
+      "http://www.usanetwork.com/sites/usanetwork/files/styles/629x720/public/suits_cast_harvey.jpg?itok=fpTOeeBb"),
   new ChatModel(
       name: "Barry Allen",
       message: "I'm the fastest man alive!",

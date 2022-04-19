@@ -6,6 +6,7 @@ import 'package:flutterwhatsapp/pages/chat_screen.dart';
 import 'package:flutterwhatsapp/pages/status_screen.dart';
 
 class WhatsAppHome extends StatefulWidget {
+
   final List<CameraDescription> cameras;
   WhatsAppHome({this.cameras});
 
@@ -17,7 +18,7 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
   bool showFab = true;
-
+  bool state = false;
   @override
   void initState() {
     super.initState();
@@ -45,12 +46,12 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
           indicatorColor: Colors.white,
           tabs: <Widget>[
             Tab(icon: Icon(Icons.camera_alt)),
-            Tab(text: "CHATS"),
+            Tab(text: "CHAT"),
             Tab(
-              text: "STATUS",
+              text: "STATI",
             ),
             Tab(
-              text: "CALLS",
+              text: "CHIAMATE",
             ),
           ],
         ),
@@ -73,14 +74,15 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
       ),
       floatingActionButton: showFab
           ? FloatingActionButton(
-              backgroundColor: Theme.of(context).accentColor,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
               child: Icon(
                 Icons.message,
                 color: Colors.white,
               ),
               onPressed: () {
                print("open chats");
-               setState(() {
+               setState(() {  
+                  state = true;
                });
               }
             )

@@ -19,6 +19,7 @@ class ChatScreenState extends State<ChatScreen> {
                 height: 10.0,
               ),
               new ListTile(
+                onTap: ()=>print('ciao'),
                 leading: new CircleAvatar(
                   foregroundColor: Theme.of(context).primaryColor,
                   backgroundColor: Colors.grey,

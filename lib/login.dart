@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutterwhatsapp/whatsapp_home.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:session/session.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 List<CameraDescription> cameras;
 

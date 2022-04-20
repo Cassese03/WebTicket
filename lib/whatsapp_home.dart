@@ -38,7 +38,7 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("WhatsApp"),
+        title: Text("WebTicket"),
         backgroundColor: Colors.green,
         elevation: 0.7,
         bottom: TabBar(

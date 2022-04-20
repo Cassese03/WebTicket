@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../models/chat_model.dart';
 
+
 class ChatScreen extends StatefulWidget {
   @override
   ChatScreenState createState() {
@@ -58,7 +59,7 @@ class ChatScreenState extends State<ChatScreen> {
                 leading: new CircleAvatar(
                   foregroundColor: Theme.of(context).primaryColor,
                   backgroundColor: Colors.grey,
-                  backgroundImage: new NetworkImage(_notes[index].avatarUrl),
+                  backgroundImage: new NetworkImage('https://scontent-mia3-1.xx.fbcdn.net/v/t1.6435-9/78954370_1394163710757529_5042324745471655936_n.jpg?_nc_cat=106&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=Xd1jR33zT8YAX8avFGj&_nc_ht=scontent-mia3-1.xx&oh=00_AT_cMRNVJlshEfimqIzGEcTF1vjkioebb923HPb9-KTrig&oe=6283C8F7'),
                 ),
                 title: new Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwhatsapp/whatsapp_home.dart';
+import 'package:flutterwhatsapp/models/login_data.dart';
 import 'package:camera/camera.dart';
+import 'package:flutterwhatsapp/whatsapp_home.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:session/session.dart';
 
 List<CameraDescription> cameras;
 
@@ -18,6 +22,29 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+    // ignore: deprecated_member_use
+    List<LoginData> _session = List<LoginData>();
+
+  Future<List<LoginData>> fetchLogin(numero) async {
+      var url = 'https://centralino.gamwki.it/api/login/'+numero;
+    
+
+      var response = await http.get(Uri.parse(url));
+
+      // ignore: deprecated_member_use
+      var notes = List<LoginData>();
+
+      if (response.statusCode == 200) {
+        var notesJson = json.decode(response.body); 
+        for (var noteJson in notesJson) {
+          notes.add(LoginData.fromJson(noteJson));
+          }
+      }
+      return notes;
+  }
+
+
   final _formKey = GlobalKey<FormState>();
   var rememberValue = false;
   var numero;
@@ -33,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'WhatsApp',
+              'WebTicket',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 40,
@@ -50,8 +77,8 @@ class _LoginPageState extends State<LoginPage> {
                     validator: (value) => (value.length) == 10
                         ?  null  
                         : "Inserire un numero di Telefono valido",
-                          onChanged: (val){
-                            numero = val;
+                    onChanged: (val){
+                        numero = val;
                       },
                     maxLines: 1,
                     decoration: InputDecoration(
@@ -70,13 +97,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {                      
-                          if (_formKey.currentState.validate()) {
-                            print(numero);
-                            Navigator.push(
-                                context,
+                        if (_formKey.currentState.validate()) {
+                            fetchLogin(numero).then ( (value) {
+                              _session.addAll(value);
+                            });
+                        }
+                        Navigator.push(context,
                                 MaterialPageRoute(builder: (context) => new WhatsAppHome(cameras:cameras)),
                               );
-                        }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),

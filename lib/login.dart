@@ -1,11 +1,18 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:login_ui/register_screen.dart';
+import 'package:flutterwhatsapp/whatsapp_home.dart';
+import 'package:camera/camera.dart';
+
+List<CameraDescription> cameras;
+
+Future<Null> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+  runApp(new LoginPage());
+}
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key, required this.title}) : super(key: key);
+  const LoginPage({key, this.title}) : super(key: key);
   final String title;
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -13,6 +20,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   var rememberValue = false;
+  var numero;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Sign in',
+              'WhatsApp',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 40,
@@ -39,13 +47,16 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   TextFormField(
-                    validator: (value) => EmailValidator.validate(value!)
-                        ? null
-                        : "Please enter a valid email",
+                    validator: (value) => (value.length) == 10
+                        ?  null  
+                        : "Inserire un numero di Telefono valido",
+                          onChanged: (val){
+                            numero = val;
+                      },
                     maxLines: 1,
                     decoration: InputDecoration(
-                      hintText: 'Enter your email',
-                      prefixIcon  : const Icon(Icons.email),
+                      hintText: 'Enter your number phone',
+                      prefixIcon  : const Icon(Icons.phone),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -53,48 +64,25 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(
                     height: 20,
-                  ),
-                  TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      return null;
-                    },
-                    maxLines: 1,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.lock),
-                      hintText: 'Enter your password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                  CheckboxListTile(
-                    title: const Text("Remember me"),
-                    contentPadding: EdgeInsets.zero,
-                    value: rememberValue,
-                    activeColor: Theme.of(context).colorScheme.primary,
-                    onChanged: (newValue) {
-                      setState(() {
-                        rememberValue = newValue!;
-                      });
-                    },
-                    controlAffinity: ListTileControlAffinity.leading,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {}
+                    onPressed: () {                      
+                          if (_formKey.currentState.validate()) {
+                            print(numero);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => new WhatsAppHome(cameras:cameras)),
+                              );
+                        }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
                     ),
                     child: const Text(
-                      'Sign in',
+                      'Entra',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),

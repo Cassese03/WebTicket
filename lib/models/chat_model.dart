@@ -1,11 +1,46 @@
+/*import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+*/
 class ChatModel {
-  final String name;
-  final String message;
-  final String time;
-  final String avatarUrl;
+   String name;
+   String message;
+   String time;
+   String avatarUrl;
 
   ChatModel({this.name, this.message, this.time, this.avatarUrl});
-}
+
+    ChatModel.fromJson (Map<String, dynamic> json){
+      name = json['nominativo_operatore'];
+      message = json['oggetto'];
+      time = json['data'];
+      avatarUrl = json['id_operatore_chiusura'];
+    }
+
+}    
+ /* // ignore: deprecated_member_use
+  List<ChatModel> _notes = List<ChatModel>();
+
+  Future<List<ChatModel>> fetchNotes() async {
+      var url = '';
+
+      // ignore: deprecated_member_use
+      List<ChatModel> _notes = List<ChatModel>();
+
+      var response = await http.get(Uri.parse(url));
+
+      // ignore: deprecated_member_use
+      var notes = List<ChatModel>();
+
+      if (response.statusCode == 200) {
+        var notesJson = json.decode(response.body);
+        for (var noteJson in notesJson) {
+          notes.add(ChatModel.fromJson(noteJson));
+          }
+      }
+      return notes;
+  }
+*/
 
 List<ChatModel> dummyData = [
   new ChatModel(

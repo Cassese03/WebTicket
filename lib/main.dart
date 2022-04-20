@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterwhatsapp/whatsapp_home.dart';
+import 'package:flutterwhatsapp/login.dart';
 
 List<CameraDescription> cameras;
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         primaryColor: new Color(0xff075E54), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: new Color(0xff25D366)),
       ),
       debugShowCheckedModeBanner: false,
-      home: new WhatsAppHome(cameras:cameras),
+      home: /*new WhatsAppHome(cameras:cameras)*/ new LoginPage(),
     );
   }
 }

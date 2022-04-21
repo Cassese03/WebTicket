@@ -96,15 +96,29 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   ElevatedButton(
-                    onPressed: () {                      
+                    onPressed: () {
                         if (_formKey.currentState.validate()) {
                             fetchLogin(numero).then ( (value) {
                               _session.addAll(value);
                             });
-                        }
-                        Navigator.push(context,
-                                MaterialPageRoute(builder: (context) => new WhatsAppHome(cameras:cameras)),
+                            if(_session.isNotEmpty == true){
+                              
+                              print(_session[0].token);
+                              
+                              setState((){
+                                FlutterSession().set('token', _session[0].token);
+                              });
+                                                            
+                              Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => new WhatsAppHome(cameras:cameras)),
                               );
+
+                          }else{
+
+                            print('Inserisci un  numero valido');
+
+                          }
+                        }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),

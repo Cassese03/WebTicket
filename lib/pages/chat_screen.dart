@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../models/chat_model.dart';
-
+import 'package:flutter_session/flutter_session.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -17,7 +17,10 @@ class ChatScreenState extends State<ChatScreen> {
   List<ChatModel> _notes = List<ChatModel>();
 
   Future<List<ChatModel>> fetchNotes() async {
-      var url = 'https://centralino.gamwki.it/api/ticket_aperti/mDLKbai0cQwLl6F4x3mNVAFFHMiucVPdj3h3ahHYksM2TYZTIa';
+    
+      var token = await FlutterSession().get("token");
+
+      var url = 'https://centralino.gamwki.it/api/ticket_aperti/'+token;
 
       var response = await http.get(Uri.parse(url));
 
@@ -33,7 +36,7 @@ class ChatScreenState extends State<ChatScreen> {
       return notes;
   }
   @override
-  void initState() {
+  void initState(){
   fetchNotes().then((value) {
     setState(() {
       _notes.addAll(value);

@@ -5,7 +5,7 @@ import 'package:flutterwhatsapp/whatsapp_home.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_session/flutter_session.dart';
-/* i like it */
+
 List<CameraDescription> cameras;
 
 Future<Null> main() async {
@@ -54,7 +54,13 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
-        padding: const EdgeInsets.all(20),
+          height: 200,
+          width: double.infinity,
+          decoration: const BoxDecoration(
+          image: DecorationImage(
+          image: NetworkImage("https://centralino.gamwki.it/img/icona.png"),
+          fit: BoxFit.cover),
+          padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

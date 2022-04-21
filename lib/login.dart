@@ -54,34 +54,23 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Container(
-          height: 200,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-          image: DecorationImage(
-          image: NetworkImage("https://centralino.gamwki.it/img/icona.png"),
-          fit: BoxFit.cover),
-          padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'WebTicket',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 40,
-              ),
-            ),
+            Image.network("https://centralino.gamwki.it/img/icona.png"),
             const SizedBox(
-              height: 60,
+              height: 50.0,
             ),
             Form(
               key: _formKey,
               child: Column(
                 children: [
-                  TextFormField(
+                  Container(
+                      width: 300.0,
+                      child: TextFormField(
                     validator: (value) => (value.length) == 10
-                        ?  null  
+                        ?  null
                         : "Inserire un numero di Telefono valido",
                     onChanged: (val){
                         numero = val;
@@ -94,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
+                  ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -108,13 +98,13 @@ class _LoginPageState extends State<LoginPage> {
                               _session.addAll(value);
                             });
                             if(_session.isNotEmpty == true){
-                              
+
                               print(_session[0].token);
-                              
+
                               setState((){
                                 FlutterSession().set('token', _session[0].token);
                               });
-                                                            
+
                               Navigator.push(context,
                               MaterialPageRoute(builder: (context) => new WhatsAppHome(cameras:cameras)),
                               );

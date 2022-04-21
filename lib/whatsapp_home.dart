@@ -39,7 +39,7 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
     return Scaffold(
       appBar: AppBar(
         title: Text("WebTicket"),
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 0.7,
         bottom: TabBar(
           controller: _tabController,
@@ -74,7 +74,7 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
       ),
       floatingActionButton: showFab
           ? FloatingActionButton(
-              backgroundColor: Theme.of(context).colorScheme.secondary,
+              backgroundColor: Theme.of(context).colorScheme.background,
               child: Icon(
                 Icons.message,
                 color: Colors.white,

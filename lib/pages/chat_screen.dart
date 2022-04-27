@@ -58,7 +58,7 @@ class ChatScreenState extends State<ChatScreen> {
                 height: 10.0,
               ),
               new ListTile(
-                onTap: ()=>print('ciao'),
+                onTap: ()=>Navigator.push(context,MaterialPageRoute(builder: (context) => new ChatScreen()),),
                 leading: new CircleAvatar(
                   foregroundColor: Theme.of(context).primaryColor,
                   backgroundColor: Colors.grey,

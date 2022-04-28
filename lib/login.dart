@@ -22,28 +22,25 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-    // ignore: deprecated_member_use
-    List<LoginData> _session = List<LoginData>();
+  // ignore: deprecated_member_use
+  List<LoginData> _session = List<LoginData>();
 
   Future<List<LoginData>> fetchLogin(numero) async {
-      var url = 'https://centralino.gamwki.it/api/login/'+numero;
-    
+    var url = 'https://centralino.gamwki.it/api/login/' + numero;
 
-      var response = await http.get(Uri.parse(url));
+    var response = await http.get(Uri.parse(url));
 
-      // ignore: deprecated_member_use
-      var notes = List<LoginData>();
+    // ignore: deprecated_member_use
+    var notes = List<LoginData>();
 
-      if (response.statusCode == 200) {
-        var notesJson = json.decode(response.body); 
-        for (var noteJson in notesJson) {
-          notes.add(LoginData.fromJson(noteJson));
-          }
+    if (response.statusCode == 200) {
+      var notesJson = json.decode(response.body);
+      for (var noteJson in notesJson) {
+        notes.add(LoginData.fromJson(noteJson));
       }
-      return notes;
+    }
+    return notes;
   }
-
 
   final _formKey = GlobalKey<FormState>();
   var rememberValue = false;
@@ -67,23 +64,23 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: [
                   Container(
-                      width: 300.0,
-                      child: TextFormField(
-                    validator: (value) => (value.length) == 10
-                        ?  null
-                        : "Inserire un numero di Telefono valido",
-                    onChanged: (val){
-                        numero = val;
+                    width: 300.0,
+                    child: TextFormField(
+                      validator: (value) => (value.length) == 10
+                          ? null
+                          : "Inserire un numero di Telefono valido",
+                      onChanged: (val) {
+                        if (val.length == 10) numero = val;
                       },
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      hintText: 'Enter your number phone',
-                      prefixIcon  : const Icon(Icons.phone),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                      maxLines: 1,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your number phone',
+                        prefixIcon: const Icon(Icons.phone),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     ),
-                  ),
                   ),
                   const SizedBox(
                     height: 20,
@@ -93,28 +90,27 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                            fetchLogin(numero).then ( (value) {
-                              _session.addAll(value);
-                            });
-                            if(_session.isNotEmpty == true){
+                      if (_formKey.currentState.validate()) {
+                        fetchLogin(numero).then((value) {
+                          _session.addAll(value);
+                        });
+                        if (_session.isNotEmpty == true) {
+                          setState(() {
+                            FlutterSession().set('token', _session[0].token);
+                            FlutterSession()
+                                .set('nominativo', _session[0].nominativo);
+                          });
 
-                              print(_session[0].token);
-
-                              setState((){
-                                FlutterSession().set('token', _session[0].token);
-                              });
-
-                              Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => new WhatsAppHome(cameras:cameras)),
-                              );
-
-                          }else{
-
-                            print('Inserisci un  numero valido');
-
-                          }
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    new WhatsAppHome(cameras: cameras)),
+                          );
+                        } else {
+                          print('Inserisci un  numero valido');
                         }
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),

@@ -30,6 +30,11 @@ final User greg = User(
   name: 'Greg',
   imageUrl: 'assets/images/greg.jpg',
 );
+final User Deterchimica = User(
+  id: 10,
+  name: 'Deterchimica',
+  imageUrl: 'assets/images/greg.jpg',
+);
 final User james = User(
   id: 2,
   name: 'James',
@@ -62,7 +67,7 @@ final User steven = User(
 );
 
 // FAVORITE CONTACTS
-List<User> favorites = [sam, steven, olivia, john, greg];
+List<User> favorites = [sam, steven, olivia, john, greg, Deterchimica];
 
 // EXAMPLE CHATS ON HOME SCREEN
 List<Message> chats = [
@@ -115,6 +120,13 @@ List<Message> chats = [
     isLiked: false,
     unread: false,
   ),
+  Message(
+    sender: Deterchimica,
+    time: '11:30 AM',
+    text: 'Hey, how\'s it going? What did you do today?',
+    isLiked: false,
+    unread: false,
+  ),
 ];
 
 // EXAMPLE MESSAGES IN CHAT SCREEN
@@ -160,5 +172,12 @@ List<Message> messages = [
     text: 'I ate so much food today.',
     isLiked: false,
     unread: true,
+  ),
+    Message(
+    sender: Deterchimica,
+    time: '11:30 AM',
+    text: 'Hey, how\'s it going? What did you do today?',
+    isLiked: false,
+    unread: false,
   ),
 ];

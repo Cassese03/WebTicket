@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import '../models/messages.dart';
 import '../models/user.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen23 extends StatefulWidget {
   final User user;
 
-  ChatScreen({this.user});
+  ChatScreen23({this.user});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen23> {
   _buildMessage(Message message, bool isMe) {
     final Container msg = Container(
       margin: isMe
@@ -27,7 +28,8 @@ class _ChatScreenState extends State<ChatScreen> {
       padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
       width: MediaQuery.of(context).size.width * 0.75,
       decoration: BoxDecoration(
-        color: isMe ? Theme.of(context).accentColor : Color(0xFFFFEFEE),
+        color:
+            isMe ? Theme.of(context).colorScheme.secondary : Color(0xFFFFEFEE),
         borderRadius: isMe
             ? BorderRadius.only(
                 topLeft: Radius.circular(15.0),
@@ -116,11 +118,16 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var ciao;
+    Future(() async {
+      ciao = await FlutterSession().get("nominativo");
+      ciao.substring((12));
+    });
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: Text(
-          widget.user.name,
+          'greg',
           style: TextStyle(
             fontSize: 28.0,
             fontWeight: FontWeight.bold,
@@ -155,6 +162,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     topRight: Radius.circular(30.0),
                   ),
                   child: ListView.builder(
+                    shrinkWrap: true,
                     padding: EdgeInsets.only(top: 15.0),
                     itemCount: messages.length,
                     itemBuilder: (BuildContext context, int index) {

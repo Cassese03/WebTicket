@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
+//import 'package:flutter_session/flutter_session.dart';
 import '../models/messages.dart';
 import '../models/user.dart';
 
 class ChatScreen23 extends StatefulWidget {
   final User user;
-
-  ChatScreen23({this.user});
-
+  final String token;
+  final String nominativo;
+  ChatScreen23({this.token,this.user, this.nominativo});
+  
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen23> {
+  
   _buildMessage(Message message, bool isMe) {
     final Container msg = Container(
       margin: isMe
@@ -41,10 +43,10 @@ class _ChatScreenState extends State<ChatScreen23> {
               ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Text(
-            message.time,
+            Text(
+            currentUser.name,
             style: TextStyle(
               color: Colors.blueGrey,
               fontSize: 16.0,
@@ -60,6 +62,15 @@ class _ChatScreenState extends State<ChatScreen23> {
               fontWeight: FontWeight.w600,
             ),
           ),
+          SizedBox(height: 8.0),
+                    Text(
+            message.time,
+            style: TextStyle(
+              color: Colors.blueGrey,
+              fontSize: 8.0,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ],
       ),
     );
@@ -68,7 +79,7 @@ class _ChatScreenState extends State<ChatScreen23> {
     }
     return Row(
       children: <Widget>[
-        msg,
+        msg,/*
         IconButton(
           icon: message.isLiked
               ? Icon(Icons.favorite)
@@ -78,7 +89,7 @@ class _ChatScreenState extends State<ChatScreen23> {
               ? Theme.of(context).primaryColor
               : Colors.blueGrey,
           onPressed: () {},
-        )
+        )*/
       ],
     );
   }
@@ -109,7 +120,9 @@ class _ChatScreenState extends State<ChatScreen23> {
             icon: Icon(Icons.send),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () {},
+            onPressed: () { setState(() {
+              
+            });},
           ),
         ],
       ),
@@ -118,16 +131,15 @@ class _ChatScreenState extends State<ChatScreen23> {
 
   @override
   Widget build(BuildContext context) {
-    var ciao;
-    Future(() async {
-      ciao = await FlutterSession().get("nominativo");
-      ciao.substring((12));
-    });
+    String token = widget.token;
+    String nominativo = widget.nominativo;
+    print(nominativo);
+    print(token);
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: Text(
-          'greg',
+          nominativo,
           style: TextStyle(
             fontSize: 28.0,
             fontWeight: FontWeight.bold,

@@ -1,10 +1,13 @@
+// ignore_for_file: await_only_futures
+
 import 'package:flutter/material.dart';
 import 'package:flutterwhatsapp/models/login_data.dart';
 import 'package:camera/camera.dart';
-import 'package:flutterwhatsapp/whatsapp_home.dart';
+import 'package:flutterwhatsapp/pages/open_chat_screen.dart';
+//import 'package:flutterwhatsapp/whatsapp_home.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter_session/flutter_session.dart';
+//import 'package:flutter_session/flutter_session.dart';
 
 List<CameraDescription> cameras;
 
@@ -94,12 +97,15 @@ class _LoginPageState extends State<LoginPage> {
                         await fetchLogin(numero).then((value) {
                           _session.addAll(value);
                         });
-                          await FlutterSession().set('token', _session[0].token);
+                        /*
+                        await FlutterSession().set('token', _session[0].token);
+                        await FlutterSession().set('token', _session[0].nominativo);
+                        */
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    new WhatsAppHome(cameras: cameras)),
+                                    new ChatScreen23(token: _session[0].token.toString(), nominativo:_session[0].nominativo.toString())),
                           );
                       }
                     },

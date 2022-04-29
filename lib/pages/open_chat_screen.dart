@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 //import 'package:flutter_session/flutter_session.dart';
 import '../models/messages.dart';
 import '../models/user.dart';
+import 'package:http/http.dart' as http;
 
 class ChatScreen23 extends StatefulWidget {
   final User user;
@@ -14,7 +17,24 @@ class ChatScreen23 extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen23> {
-  
+
+    Future<String> sendTicket(text) async {
+    var url = 'https://centralino.gamwki.it/api/login/' + text;
+
+    var response = await http.get(Uri.parse(url));
+
+    // ignore: deprecated_member_use
+    var notes;
+
+    if (response.statusCode == 200) {
+      var notesJson = json.decode(response.body);
+      for (var noteJson in notesJson) {
+        notes.fromJson(noteJson);
+      }
+    }
+    return notes;   
+    }
+    var text;
   _buildMessage(Message message, bool isMe) {
     final Container msg = Container(
       margin: isMe
@@ -110,9 +130,11 @@ class _ChatScreenState extends State<ChatScreen23> {
           Expanded(
             child: TextField(
               textCapitalization: TextCapitalization.sentences,
-              onChanged: (value) {},
+              onChanged: (value) {
+                text = value;
+              },
               decoration: InputDecoration.collapsed(
-                hintText: 'Send a message...',
+                hintText: 'Scrivi qui il tuo ticket...',
               ),
             ),
           ),
@@ -120,9 +142,9 @@ class _ChatScreenState extends State<ChatScreen23> {
             icon: Icon(Icons.send),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () { setState(() {
-              
-            });},
+            onPressed: () { 
+               sendTicket(text);
+            },
           ),
         ],
       ),
@@ -133,8 +155,7 @@ class _ChatScreenState extends State<ChatScreen23> {
   Widget build(BuildContext context) {
     String token = widget.token;
     String nominativo = widget.nominativo;
-    print(nominativo);
-    print(token);
+
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
@@ -192,4 +213,7 @@ class _ChatScreenState extends State<ChatScreen23> {
       ),
     );
   }
+}
+
+class risposta {
 }

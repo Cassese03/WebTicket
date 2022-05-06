@@ -23,7 +23,6 @@ class _ChatScreenState extends State<ChatScreen23> {
     var url = 'https://centralino.gamwki.it/api/login/' + text;
     
     var response = await http.get(Uri.parse(url));
-    print(response.toString());
     // ignore: deprecated_member_use
     var notes = List<LoginData>();
 
@@ -145,7 +144,7 @@ class _ChatScreenState extends State<ChatScreen23> {
             color: Theme.of(context).primaryColor,
             onPressed: () async{ 
                     final notes = await sendTicket(text);
-                    print(notes);
+                    print(notes[0].token);
             }
           ),
         ],

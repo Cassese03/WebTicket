@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 //import 'package:flutter_session/flutter_session.dart';
+import '../models/login_data.dart';
 import '../models/messages.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
@@ -18,18 +19,18 @@ class ChatScreen23 extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen23> {
 
-    Future<String> sendTicket(text) async {
+    Future<List<LoginData>> sendTicket(text) async {
     var url = 'https://centralino.gamwki.it/api/login/' + text;
-
+    
     var response = await http.get(Uri.parse(url));
-
+    print(response.toString());
     // ignore: deprecated_member_use
-    var notes;
+    var notes = List<LoginData>();
 
     if (response.statusCode == 200) {
       var notesJson = json.decode(response.body);
       for (var noteJson in notesJson) {
-        notes.fromJson(noteJson);
+       notes.add(LoginData.fromJson(noteJson));
       }
     }
     return notes;   
@@ -142,9 +143,10 @@ class _ChatScreenState extends State<ChatScreen23> {
             icon: Icon(Icons.send),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () { 
-               sendTicket(text);
-            },
+            onPressed: () async{ 
+                    final notes = await sendTicket(text);
+                    print(notes);
+            }
           ),
         ],
       ),
@@ -213,7 +215,4 @@ class _ChatScreenState extends State<ChatScreen23> {
       ),
     );
   }
-}
-
-class risposta {
 }

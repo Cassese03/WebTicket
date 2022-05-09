@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+//import 'package:flutterwhatsapp/models/risposta.dart';
 //import 'package:flutter_session/flutter_session.dart';
-import '../models/login_data.dart';
+//import '../models/login_data.dart';
 import '../models/messages.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
@@ -10,31 +10,40 @@ import 'package:http/http.dart' as http;
 class ChatScreen23 extends StatefulWidget {
   final User user;
   final String token;
-  final String nominativo;
-  ChatScreen23({this.token,this.user, this.nominativo});
-  
+  final String contatto;
+  ChatScreen23({this.token, this.user, this.contatto});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen23> {
-
-    Future<List<LoginData>> sendTicket(text) async {
-    var url = 'https://centralino.gamwki.it/api/login/' + text;
-    
-    var response = await http.get(Uri.parse(url));
-    // ignore: deprecated_member_use
-    var notes = List<LoginData>();
-
+  Future<http.Response> sendTicket(text, contatto) async {
+    print(text);
+    print(contatto);
+    final response = await  http.post(
+      Uri.parse('https://centralino.gamwki.it/api/crea_ticket/cZU95xvnDfgjp9fnyHqz4DVQKLCNw8IVeFRnm1KrVM9Q98YVA0'),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'messaggio': text,
+        'contatto': contatto,
+      }),
+    );
+    print(response.statusCode);
     if (response.statusCode == 200) {
-      var notesJson = json.decode(response.body);
-      for (var noteJson in notesJson) {
-       notes.add(LoginData.fromJson(noteJson));
-      }
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      return null;
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      throw Exception('Failed to create ticket.');
     }
-    return notes;   
-    }
-    var text;
+  }
+
+  var text;
   _buildMessage(Message message, bool isMe) {
     final Container msg = Container(
       margin: isMe
@@ -65,7 +74,7 @@ class _ChatScreenState extends State<ChatScreen23> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-            Text(
+          Text(
             currentUser.name,
             style: TextStyle(
               color: Colors.blueGrey,
@@ -83,7 +92,7 @@ class _ChatScreenState extends State<ChatScreen23> {
             ),
           ),
           SizedBox(height: 8.0),
-                    Text(
+          Text(
             message.time,
             style: TextStyle(
               color: Colors.blueGrey,
@@ -99,7 +108,7 @@ class _ChatScreenState extends State<ChatScreen23> {
     }
     return Row(
       children: <Widget>[
-        msg,/*
+        msg, /*
         IconButton(
           icon: message.isLiked
               ? Icon(Icons.favorite)
@@ -115,6 +124,7 @@ class _ChatScreenState extends State<ChatScreen23> {
   }
 
   _buildMessageComposer() {
+    String contatto = widget.contatto;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
       height: 70.0,
@@ -139,14 +149,12 @@ class _ChatScreenState extends State<ChatScreen23> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.send),
-            iconSize: 25.0,
-            color: Theme.of(context).primaryColor,
-            onPressed: () async{ 
-                    final notes = await sendTicket(text);
-                    print(notes[0].token);
-            }
-          ),
+              icon: Icon(Icons.send),
+              iconSize: 25.0,
+              color: Theme.of(context).primaryColor,
+              onPressed: () async {
+                var risposta = await sendTicket(text, contatto);
+              }),
         ],
       ),
     );
@@ -154,14 +162,14 @@ class _ChatScreenState extends State<ChatScreen23> {
 
   @override
   Widget build(BuildContext context) {
-    String token = widget.token;
-    String nominativo = widget.nominativo;
+    //  String token = widget.token;
+    String contatto = widget.contatto;
 
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         title: Text(
-          nominativo,
+          contatto,
           style: TextStyle(
             fontSize: 28.0,
             fontWeight: FontWeight.bold,

@@ -1,5 +1,4 @@
 // ignore_for_file: await_only_futures
-
 import 'package:flutter/material.dart';
 import 'package:flutterwhatsapp/models/login_data.dart';
 import 'package:camera/camera.dart';
@@ -58,7 +57,8 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-         //   Image.network("https://centralino.gamwki.it/img/icona.png"),
+            //   Image.network("https://centralino.gamwki.it/img/icona.png"),
+            Image.asset('assets/logo.png'),
             const SizedBox(
               height: 50.0,
             ),
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   ElevatedButton(
-                    onPressed: () async{
+                    onPressed: () async {
                       if (_formKey.currentState.validate()) {
                         await fetchLogin(numero).then((value) {
                           _session.addAll(value);
@@ -101,12 +101,13 @@ class _LoginPageState extends State<LoginPage> {
                         await FlutterSession().set('token', _session[0].token);
                         await FlutterSession().set('token', _session[0].nominativo);
                         */
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    new ChatScreen23(token: _session[0].token.toString(), nominativo:_session[0].nominativo.toString())),
-                          );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => new ChatScreen23(
+                                  token: _session[0].token.toString(),
+                                  contatto: _session[0].nominativo.toString())),
+                        );
                       }
                     },
                     style: ElevatedButton.styleFrom(

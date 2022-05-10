@@ -21,11 +21,9 @@ class ChatScreen23 extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen23> {
-  Future<http.Response> sendTicket(text, contatto) async {
-    print(text);
-    print(contatto);
+  Future<http.Response> sendTicket(text, contatto, token) async {
     final response = await  http.post(
-      Uri.parse('https://centralino.gamwki.it/api/crea_ticket/cZU95xvnDfgjp9fnyHqz4DVQKLCNw8IVeFRnm1KrVM9Q98YVA0'),
+      Uri.parse('https://centralino.gamwki.it/api/crea_ticket/'+ token),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -81,7 +79,7 @@ class _ChatScreenState extends State<ChatScreen23> {
             leading: new CircleAvatar(
               foregroundColor: Theme.of(context).primaryColor,
               backgroundColor: Colors.grey,
-              //backgroundImage: AssetImage('assets/logo1.png'),
+              backgroundImage: AssetImage('assets/logo1.png'),
             ),
             title: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,6 +159,7 @@ class _ChatScreenState extends State<ChatScreen23> {
   }
 
   _buildMessageComposer() {
+    String token = widget.token;
     String contatto = widget.contatto;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -194,7 +193,7 @@ class _ChatScreenState extends State<ChatScreen23> {
               iconSize: 25.0,
               color: Theme.of(context).primaryColor,
               onPressed: () async  {
-                var risposta = await sendTicket(text, contatto);
+                var risposta = await sendTicket(text, contatto, token);
                 // ignore: unrelated_type_equality_checks
                 if(risposta.statusCode == '200'){
                     showDialog(
@@ -286,7 +285,6 @@ class _ChatScreenState extends State<ChatScreen23> {
 
   @override
   Widget build(BuildContext context) {
-    //  String token = widget.token;
     String contatto = widget.contatto;
 
     return Scaffold(

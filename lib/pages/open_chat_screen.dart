@@ -61,8 +61,9 @@ class _ChatScreenState extends State<ChatScreen23> {
       padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
       width: MediaQuery.of(context).size.width * 0.75,
       decoration: BoxDecoration(
-        color:
-            isMe ? Theme.of(context).colorScheme.secondary : Color(0xFFFFEFEE),
+        color: isMe
+            ? Theme.of(context).colorScheme.secondary
+            : Color.fromARGB(195, 255, 239, 238),
         borderRadius: isMe
             ? BorderRadius.only(
                 topLeft: Radius.circular(15.0),
@@ -174,7 +175,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                   context: context,
                   builder: (context) {
                     return Dialog(
-                      backgroundColor: Color.fromRGBO(217, 253, 211, 0.9),
+                      backgroundColor: Color.fromARGB(174, 140, 235, 123),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                       child: Container(
@@ -186,10 +187,12 @@ class _ChatScreenState extends State<ChatScreen23> {
                             const Text("Errore!",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 )),
                             const Text("Funzionalità ancora non disponibile.",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 )),
                             const SizedBox(
                               height: 16,
@@ -199,7 +202,10 @@ class _ChatScreenState extends State<ChatScreen23> {
                                 setState(() {});
                                 Navigator.pop(context);
                               },
-                              child: const Text("Esci"),
+                              child: const Text("Esci",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  )),
                               color: (Colors.red),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)),
@@ -235,7 +241,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                       context: context,
                       builder: (context) {
                         return Dialog(
-                          backgroundColor: Color.fromRGBO(217, 253, 211, 0.9),
+                          backgroundColor: Color.fromARGB(174, 140, 235, 123),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           child: Container(
@@ -275,7 +281,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                       context: context,
                       builder: (context) {
                         return Dialog(
-                          backgroundColor: Color.fromRGBO(217, 253, 211, 0.9),
+                          backgroundColor: Color.fromARGB(174, 140, 235, 123),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           child: Container(
@@ -335,7 +341,7 @@ class _ChatScreenState extends State<ChatScreen23> {
           ),
         ),
         elevation: 0.0,
-        backgroundColor: Color(0x044A43),
+        backgroundColor: Color.fromARGB(174, 140, 235, 123),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),

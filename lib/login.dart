@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                               builder: (context) {
                                 return Dialog(
                                   backgroundColor:
-                                      Color.fromRGBO(217, 253, 211, 0.9),
+                                      Color.fromARGB(174, 140, 235, 123),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12)),
                                   child: Container(

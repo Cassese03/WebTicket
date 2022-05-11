@@ -46,6 +46,7 @@ class _ChatScreenState extends State<ChatScreen23> {
 
   var text;
   _buildMessage(Message message, bool isMe) {
+    String contatto = widget.contatto;
     final Container msg = Container(
       margin: isMe
           ? EdgeInsets.only(
@@ -79,7 +80,7 @@ class _ChatScreenState extends State<ChatScreen23> {
             leading: new CircleAvatar(
               foregroundColor: Theme.of(context).primaryColor,
               backgroundColor: Colors.grey,
-              backgroundImage: AssetImage('assets/logo1.png'),
+              backgroundImage: AssetImage('assets/play_store_512.png'),
             ),
             title: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,19 +88,16 @@ class _ChatScreenState extends State<ChatScreen23> {
                 new Text(
                   currentUser.name,
                   style: new TextStyle(fontWeight: FontWeight.bold),
-                ), /*
-                SizedBox(height: 8.0,),
-                new Text(
-                  message.time,
-                  style: new TextStyle(color: Colors.grey, fontSize: 14.0),
-                ),*/
+                ),
               ],
             ),
             subtitle: new Container(
               padding: const EdgeInsets.only(top: 5.0),
               child: new Text(
-                message.text,
-                style: new TextStyle(color: Colors.grey, fontSize: 15.0),
+                message.isLiked
+                    ? 'Ciao $contatto' + message.text
+                    : message.text,
+                style: new TextStyle(color: Colors.black, fontSize: 15.0),
               ),
             ),
           )
@@ -176,6 +174,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                   context: context,
                   builder: (context) {
                     return Dialog(
+                      backgroundColor: Color.fromRGBO(217, 253, 211, 0.9),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                       child: Container(
@@ -211,11 +210,6 @@ class _ChatScreenState extends State<ChatScreen23> {
                       ),
                     );
                   });
-              /*Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => new CameraScreen(widget.cameras)),
-                        );*/
             },
           ),
           Expanded(
@@ -241,6 +235,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                       context: context,
                       builder: (context) {
                         return Dialog(
+                          backgroundColor: Color.fromRGBO(217, 253, 211, 0.9),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           child: Container(
@@ -280,6 +275,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                       context: context,
                       builder: (context) {
                         return Dialog(
+                          backgroundColor: Color.fromRGBO(217, 253, 211, 0.9),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           child: Container(
@@ -334,20 +330,12 @@ class _ChatScreenState extends State<ChatScreen23> {
         title: Text(
           contatto,
           style: TextStyle(
-            fontSize: 28.0,
+            fontSize: 20.0,
             fontWeight: FontWeight.bold,
           ),
         ),
-        elevation:
-            0.0, /*
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.more_horiz),
-            iconSize: 30.0,
-            color: Colors.white,
-            onPressed: () {},
-          ),
-        ],*/
+        elevation: 0.0,
+        backgroundColor: Color(0x044A43),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -356,10 +344,9 @@ class _ChatScreenState extends State<ChatScreen23> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0),
+                  image: new DecorationImage(
+                    image: ExactAssetImage('assets/Whatsapp.png'),
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: ClipRRect(

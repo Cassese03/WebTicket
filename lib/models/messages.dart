@@ -2,8 +2,7 @@ import '../models/user.dart';
 
 class Message {
   final User sender;
-  final String
-      time; // Would usually be type DateTime or Firebase Timestamp in production apps
+  final String time;
   final String text;
   final bool isLiked;
   final bool unread;
@@ -53,14 +52,14 @@ List<Message> chats = [
 
 // EXAMPLE MESSAGES IN CHAT SCREEN
 List<Message> messages = [
-    Message(
+  Message(
     sender: deterchimica,
     time: '2:30 PM',
-    text: 'Ciao, Scrivi il tuo ticket nella barra in fondo.',
+    text: ', Scrivi il tuo ticket nella barra in fondo.',
     isLiked: true,
     unread: false,
   ),
-      Message(
+  Message(
     sender: deterchimica,
     time: '2:30 PM',
     text: 'Il tuo ticket verrà risolto il prima possibile',

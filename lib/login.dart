@@ -1,5 +1,6 @@
 // ignore_for_file: await_only_futures
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterwhatsapp/models/login_data.dart';
 import 'package:camera/camera.dart';
 import 'package:flutterwhatsapp/pages/open_chat_screen.dart';
@@ -48,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Colors.white,
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -65,6 +66,8 @@ class _LoginPageState extends State<LoginPage> {
                   Container(
                     width: 300.0,
                     child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       validator: (value) => (value.length) == 10
                           ? null
                           : "Inserire un numero di Telefono valido",
@@ -101,14 +104,15 @@ class _LoginPageState extends State<LoginPage> {
                             MaterialPageRoute(
                                 builder: (context) => new ChatScreen23(
                                     token: _session[0].token.toString(),
-                                    contatto:
-                                        _session[0].nominativo.toString())),
+                                    contatto: _session[0].contatto.toString())),
                           );
                         } else {
                           showDialog(
                               context: context,
                               builder: (context) {
                                 return Dialog(
+                                  backgroundColor:
+                                      Color.fromRGBO(217, 253, 211, 0.9),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12)),
                                   child: Container(

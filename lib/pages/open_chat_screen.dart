@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterwhatsapp/pages/camera_screen.dart';
+//import 'package:flutterwhatsapp/pages/camera_screen.dart';
 //import 'package:flutterwhatsapp/models/risposta.dart';
 //import 'package:flutter_session/flutter_session.dart';
 //import '../models/login_data.dart';
@@ -13,8 +13,8 @@ class ChatScreen23 extends StatefulWidget {
   final User user;
   final String token;
   final String contatto;
-    final List<CameraDescription> cameras;
-  ChatScreen23({this.token, this.user, this.contatto,this.cameras});
+  final List<CameraDescription> cameras;
+  ChatScreen23({this.token, this.user, this.contatto, this.cameras});
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -22,8 +22,8 @@ class ChatScreen23 extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen23> {
   Future<http.Response> sendTicket(text, contatto, token) async {
-    final response = await  http.post(
-      Uri.parse('https://centralino.gamwki.it/api/crea_ticket/'+ token),
+    final response = await http.post(
+      Uri.parse('https://centralino.gamwki.it/api/crea_ticket/' + token),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -75,7 +75,7 @@ class _ChatScreenState extends State<ChatScreen23> {
       child: Column(
         children: <Widget>[
           new ListTile(
-            onTap: (){},
+            onTap: () {},
             leading: new CircleAvatar(
               foregroundColor: Theme.of(context).primaryColor,
               backgroundColor: Colors.grey,
@@ -87,7 +87,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                 new Text(
                   currentUser.name,
                   style: new TextStyle(fontWeight: FontWeight.bold),
-                ),/*
+                ), /*
                 SizedBox(height: 8.0,),
                 new Text(
                   message.time,
@@ -104,7 +104,7 @@ class _ChatScreenState extends State<ChatScreen23> {
             ),
           )
         ],
-      ), 
+      ),
       /*Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -171,11 +171,52 @@ class _ChatScreenState extends State<ChatScreen23> {
             icon: Icon(Icons.photo_camera),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () {/*Navigator.push(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 30),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            const Text("Errore!",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            const Text("Funzionalità ancora non disponibile.",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            MaterialButton(
+                              onPressed: () async {
+                                setState(() {});
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Esci"),
+                              color: (Colors.red),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              minWidth: double.infinity,
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+              /*Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => new CameraScreen(widget.cameras)),
-                        );*/},
+                        );*/
+            },
           ),
           Expanded(
             child: TextField(
@@ -192,95 +233,92 @@ class _ChatScreenState extends State<ChatScreen23> {
               icon: Icon(Icons.send),
               iconSize: 25.0,
               color: Theme.of(context).primaryColor,
-              onPressed: () async  {
+              onPressed: () async {
                 var risposta = await sendTicket(text, contatto, token);
                 // ignore: unrelated_type_equality_checks
-                if(risposta.statusCode == 200 || risposta.statusCode == 201){
-                    showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 24, vertical: 30),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      const Text("Grazie per aver inviato il Ticket, verrà risolto il prima possibile!",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      MaterialButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                          });
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("Arrivederci"),
-                                        color: (Colors.red),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(8)),
-                                        minWidth: double.infinity,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            });
-                }else{
+                if (risposta.statusCode == 200 || risposta.statusCode == 201) {
                   showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 24, vertical: 30),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      const Text("Errore!",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      const Text("Non riusciamo a ricevere il ticket. Riprova più tardi",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      MaterialButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                          });
-                                          Navigator.pop(context);
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("Riprova"),
-                                        color: (Colors.red),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(8)),
-                                        minWidth: double.infinity,
-                                      ),
-                                    ],
-                                  ),
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 30),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                const Text(
+                                    "Grazie per aver inviato il Ticket, verrà risolto il prima possibile!",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                const SizedBox(
+                                  height: 16,
                                 ),
-                              );
-                            });
+                                MaterialButton(
+                                  onPressed: () async {
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Arrivederci"),
+                                  color: (Colors.red),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  minWidth: double.infinity,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      });
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 30),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                const Text("Errore!",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                const Text(
+                                    "Non riusciamo a ricevere il ticket. Riprova più tardi",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                MaterialButton(
+                                  onPressed: () async {
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text("Riprova"),
+                                  color: (Colors.red),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  minWidth: double.infinity,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      });
                 }
-              }
-         ),
+              }),
         ],
       ),
     );
@@ -300,7 +338,8 @@ class _ChatScreenState extends State<ChatScreen23> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        elevation: 0.0,/*
+        elevation:
+            0.0, /*
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.more_horiz),

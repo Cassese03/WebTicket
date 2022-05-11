@@ -24,9 +24,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // ignore: deprecated_member_use
-  List<LoginData> _session = List<LoginData>();
-
   Future<List<LoginData>> fetchLogin(numero) async {
     var url = 'https://centralino.gamwki.it/api/login/' + numero;
 
@@ -98,57 +95,58 @@ class _LoginPageState extends State<LoginPage> {
                         await fetchLogin(numero).then((value) {
                           _session.addAll(value);
                         });
-                        if(_session.isNotEmpty){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => new ChatScreen23(
-                                  token: _session[0].token.toString(),
-                                  contatto: _session[0].nominativo.toString())),
-                        );
-                        }else{
+                        if (_session.isNotEmpty) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => new ChatScreen23(
+                                    token: _session[0].token.toString(),
+                                    contatto:
+                                        _session[0].nominativo.toString())),
+                          );
+                        } else {
                           showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 24, vertical: 30),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      const Text("Errore!",
-                                      textAlign: TextAlign.right,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      const Text("Non riusciamo ad associare il numero selezionato ad un nostro cliente.",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      const SizedBox(
-                                        height: 16,
-                                      ),
-                                      MaterialButton(
-                                        onPressed: () async {
-                                          setState(() {
-                                          });
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text("Riprova"),
-                                        color: (Colors.red),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(8)),
-                                        minWidth: double.infinity,
-                                      ),
-                                    ],
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 24, vertical: 30),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        const Text("Errore!",
+                                            textAlign: TextAlign.right,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                        const Text(
+                                            "Non riusciamo ad associare il numero selezionato ad un nostro cliente.",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            )),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        MaterialButton(
+                                          onPressed: () async {
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Riprova"),
+                                          color: (Colors.red),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8)),
+                                          minWidth: double.infinity,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            });
+                                );
+                              });
                         }
                       }
                     },
@@ -165,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ],
+                ],
               ),
             )
           ],

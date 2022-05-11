@@ -195,7 +195,7 @@ class _ChatScreenState extends State<ChatScreen23> {
               onPressed: () async  {
                 var risposta = await sendTicket(text, contatto, token);
                 // ignore: unrelated_type_equality_checks
-                if(risposta.statusCode == '200'){
+                if(risposta.statusCode == 200 || risposta.statusCode == 201){
                     showDialog(
                             context: context,
                             builder: (context) {
@@ -247,9 +247,12 @@ class _ChatScreenState extends State<ChatScreen23> {
                                       horizontal: 24, vertical: 30),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      const Text("Errore! Non riusciamo a ricevere il ticket. Riprova più tardi",
+                                      const Text("Errore!",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                      const Text("Non riusciamo a ricevere il ticket. Riprova più tardi",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                           )),

@@ -63,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen23> {
       decoration: BoxDecoration(
         color: isMe
             ? Theme.of(context).colorScheme.secondary
-            : Color.fromARGB(195, 255, 239, 238),
+            : Color.fromRGBO(220, 248, 198, 10),
         borderRadius: isMe
             ? BorderRadius.only(
                 topLeft: Radius.circular(15.0),
@@ -175,7 +175,6 @@ class _ChatScreenState extends State<ChatScreen23> {
                   context: context,
                   builder: (context) {
                     return Dialog(
-                      backgroundColor: Color.fromARGB(174, 140, 235, 123),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                       child: Container(
@@ -206,7 +205,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                                   style: TextStyle(
                                     color: Colors.white,
                                   )),
-                              color: (Colors.red),
+                              color: Color.fromARGB(174, 140, 235, 123),
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)),
                               minWidth: double.infinity,
@@ -241,7 +240,6 @@ class _ChatScreenState extends State<ChatScreen23> {
                       context: context,
                       builder: (context) {
                         return Dialog(
-                          backgroundColor: Color.fromARGB(174, 140, 235, 123),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           child: Container(
@@ -266,7 +264,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                                     Navigator.pop(context);
                                   },
                                   child: const Text("Arrivederci"),
-                                  color: (Colors.red),
+                                  color: Color.fromARGB(174, 140, 235, 123),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)),
                                   minWidth: double.infinity,
@@ -281,7 +279,6 @@ class _ChatScreenState extends State<ChatScreen23> {
                       context: context,
                       builder: (context) {
                         return Dialog(
-                          backgroundColor: Color.fromARGB(174, 140, 235, 123),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                           child: Container(
@@ -309,7 +306,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                                     Navigator.pop(context);
                                   },
                                   child: const Text("Riprova"),
-                                  color: (Colors.red),
+                                  color: Color.fromARGB(174, 140, 235, 123),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)),
                                   minWidth: double.infinity,
@@ -341,6 +338,7 @@ class _ChatScreenState extends State<ChatScreen23> {
           ),
         ),
         elevation: 0.0,
+        //backgroundColor: Color(0x044A43),
         backgroundColor: Color.fromARGB(174, 140, 235, 123),
       ),
       body: GestureDetector(

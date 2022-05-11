@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       maxLines: 1,
                       decoration: InputDecoration(
-                        hintText: 'Enter your number phone',
+                        hintText: 'Scrivi qui il tuo numero',
                         prefixIcon: const Icon(Icons.phone),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -111,8 +111,6 @@ class _LoginPageState extends State<LoginPage> {
                               context: context,
                               builder: (context) {
                                 return Dialog(
-                                  backgroundColor:
-                                      Color.fromARGB(174, 140, 235, 123),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12)),
                                   child: Container(
@@ -140,7 +138,8 @@ class _LoginPageState extends State<LoginPage> {
                                             Navigator.pop(context);
                                           },
                                           child: const Text("Riprova"),
-                                          color: (Colors.red),
+                                          color: Color.fromARGB(
+                                              174, 140, 235, 123),
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(8)),

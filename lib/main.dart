@@ -27,3 +27,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+// per cambiare icona esegui -> flutter pub run flutter_launcher_icons:main

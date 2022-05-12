@@ -173,7 +173,16 @@ class _ChatScreenState extends State<ChatScreen23> {
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
             onPressed: () async {
-              /*
+              await availableCameras().then(
+                (value) => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CameraPage(
+                      cameras: value,
+                    ),
+                  ),
+                ),
+              );
               showDialog(
                   context: context,
                   builder: (context) {
@@ -217,17 +226,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                         ),
                       ),
                     );
-                  });*/
-              await availableCameras().then(
-                (value) => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CameraPage(
-                      cameras: value,
-                    ),
-                  ),
-                ),
-              );
+                  });
             },
           ),
           Expanded(

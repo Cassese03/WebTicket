@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -90,28 +91,98 @@ class CameraPageState extends State<CameraPage> {
         ),
       );
     }
-    return Column(children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: SizedBox(
-            height: 400,
-            width: 400,
+    return SafeArea(
+      child: Material(
+          child: Stack(
+        children: [
+          /*SafeArea(
+      child: Column(children: [
+        CameraPreview(controller),*/
+          Container(
             child: CameraPreview(controller),
           ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
+          Positioned(
+            bottom: 0.0,
+            child: Container(
+              color: Colors.black,
+              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                          icon: Icon(
+                            Icons.flash_off,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                          onPressed: () {}),
+                      InkWell(
+                        onTap: () async {
+                          pictureFile = await controller.takePicture();
+                          setState(() {
+                            if (pictureFile != null) {
+                              // Image.file(File(pictureFile.path));
+                              File imageFile = new File(pictureFile.path);
+                              List<int> imageBytes =
+                                  imageFile.readAsBytesSync();
+                              print(imageBytes);
+                              String base64Image = base64Encode(imageBytes);
+                              print(base64Image);
+                            }
+                            //print(pictureFile.path.toString());
+                          });
+                        },
+                        child: Icon(
+                          Icons.panorama_fish_eye,
+                          color: Colors.white,
+                          size: 70,
+                        ),
+                      ),
+                      IconButton(
+                          icon: Icon(
+                            Icons.flip_camera_ios,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                          onPressed: () {}), // IconButton
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      )),
+    );
+  }
+}
+/*
+sizedBox(
+height: 4,
+), // sizedBox
+Text(
+"Hold for video, tap for photo",
+stvle: Textstulet
+color: Colors.white,)
+), // Container
+), / Positioned
+]
+        /*ElevatedButton(
           onPressed: () async {
             pictureFile = await controller.takePicture();
             setState(() {});
           },
           child: const Text('Capture Image'),
         ),
-      ),
-      if (pictureFile != null) Image.file(File(pictureFile.path)),
-    ]);
-  }
-}
+        Padding(
+        padding: const EdgeInsets.all(8.0),
+        child:*/
+
+        /*
+      ),*/
+        //if (pictureFile != null) Image.file(File(pictureFile.path)),
+      */

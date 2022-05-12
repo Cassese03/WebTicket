@@ -9,6 +9,8 @@ import '../models/messages.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
 
+import 'camera_screen.dart';
+
 class ChatScreen23 extends StatefulWidget {
   final User user;
   final String token;
@@ -170,7 +172,8 @@ class _ChatScreenState extends State<ChatScreen23> {
             icon: Icon(Icons.photo_camera),
             iconSize: 25.0,
             color: Theme.of(context).primaryColor,
-            onPressed: () {
+            onPressed: () async {
+              /*
               showDialog(
                   context: context,
                   builder: (context) {
@@ -214,7 +217,17 @@ class _ChatScreenState extends State<ChatScreen23> {
                         ),
                       ),
                     );
-                  });
+                  });*/
+              await availableCameras().then(
+                (value) => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CameraPage(
+                      cameras: value,
+                    ),
+                  ),
+                ),
+              );
             },
           ),
           Expanded(

@@ -1,12 +1,11 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterwhatsapp/pages/call_screen.dart';
-import 'package:flutterwhatsapp/pages/camera_screen.dart';
+//import 'package:flutterwhatsapp/pages/camera_screen.dart';
 import 'package:flutterwhatsapp/pages/chat_screen.dart';
 import 'package:flutterwhatsapp/pages/status_screen.dart';
 
 class WhatsAppHome extends StatefulWidget {
-
   final List<CameraDescription> cameras;
   WhatsAppHome({this.cameras});
 
@@ -66,7 +65,7 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          CameraScreen(widget.cameras),
+          //CameraScreen(widget.cameras),
           ChatScreen(),
           StatusScreen(),
           CallsScreen(),
@@ -80,12 +79,11 @@ class _WhatsAppHomeState extends State<WhatsAppHome>
                 color: Colors.white,
               ),
               onPressed: () {
-               print("open chats");
-               setState(() {  
+                print("open chats");
+                setState(() {
                   state = true;
-               });
-              }
-            )
+                });
+              })
           : null,
     );
   }

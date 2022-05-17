@@ -178,11 +178,12 @@ class _ChatScreenState extends State<ChatScreen23> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => CameraPage(
-                      cameras: value,
-                    ),
+                        cameras: value,
+                        token: widget.token,
+                        contatto: widget.contatto),
                   ),
                 ),
-              );
+              ); /*
               showDialog(
                   context: context,
                   builder: (context) {
@@ -226,7 +227,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                         ),
                       ),
                     );
-                  });
+                  });*/
             },
           ),
           Expanded(

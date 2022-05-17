@@ -1,58 +1,16 @@
-import 'dart:io';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:image_picker/image_picker.dart';
 
-/*
-class CameraScreen extends StatefulWidget {
-  final List<CameraDescription> cameras;
+import 'camera_view.dart';
 
-  CameraScreen(this.cameras);
-
-  @override
-  CameraScreenState createState() {
-    return new CameraScreenState();
-  }
-}
-
-class CameraScreenState extends State<CameraScreen> {
-  CameraController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller =
-        new CameraController(widget.cameras[0], ResolutionPreset.medium);
-    controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (!controller.value.isInitialized) {
-      return new Container();
-    }
-    return new AspectRatio(
-      aspectRatio: controller.value.aspectRatio,
-      child: new CameraPreview(controller),
-    );
-  }
-}
-*/
+// ignore: must_be_immutable
 class CameraPage extends StatefulWidget {
   final List<CameraDescription> cameras;
-  const CameraPage({this.cameras, Key key}) : super(key: key);
+  String token;
+  String contatto;
+  CameraPage({this.cameras, Key key, this.token, this.contatto})
+      : super(key: key);
   @override
   CameraPageState createState() => CameraPageState();
 }
@@ -60,13 +18,26 @@ class CameraPage extends StatefulWidget {
 class CameraPageState extends State<CameraPage> {
   CameraController controller;
   XFile pictureFile;
+
+  Future pickImage() async {
+    final image = await ImagePicker().getImage(source: ImageSource.gallery);
+    if (image == null) return;
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (builder) => CameraViewPage(
+                path: image.path,
+                token: widget.token,
+                contatto: widget.contatto)));
+  }
+
   @override
 // ignore: must_call_super
   void initState() {
     super.initState();
     controller = CameraController(
       widget.cameras[0],
-      ResolutionPreset.max,
+      ResolutionPreset.veryHigh,
     );
     controller.initialize().then((_) {
       if (!mounted) {
@@ -91,16 +62,27 @@ class CameraPageState extends State<CameraPage> {
         ),
       );
     }
+
+    final size = MediaQuery.of(context).size;
+    final deviceRatio = size.width / size.height;
+
     return SafeArea(
       child: Material(
           child: Stack(
         children: [
-          /*SafeArea(
-      child: Column(children: [
-        CameraPreview(controller),*/
-          Container(
-            child: CameraPreview(controller),
+          Transform.scale(
+            scale: controller.value.aspectRatio / deviceRatio,
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: controller.value.aspectRatio,
+                child: CameraPreview(controller),
+              ),
+            ),
           ),
+          /*
+          Center(
+            child: CameraPreview(controller),
+          ),*/
           Positioned(
             bottom: 0.0,
             child: Container(
@@ -115,13 +97,16 @@ class CameraPageState extends State<CameraPage> {
                     children: [
                       IconButton(
                           icon: Icon(
-                            Icons.flash_off,
+                            Icons.photo,
                             color: Colors.white,
                             size: 28,
                           ),
-                          onPressed: () {}),
+                          onPressed: () {
+                            pickImage();
+                          }),
                       InkWell(
                         onTap: () async {
+                          /*
                           pictureFile = await controller.takePicture();
                           setState(() {
                             if (pictureFile != null) {
@@ -134,7 +119,16 @@ class CameraPageState extends State<CameraPage> {
                               print(base64Image);
                             }
                             //print(pictureFile.path.toString());
-                          });
+                          }
+                          );*/
+                          pictureFile = await controller.takePicture();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (builder) => CameraViewPage(
+                                      path: pictureFile.path,
+                                      token: widget.token,
+                                      contatto: widget.contatto)));
                         },
                         child: Icon(
                           Icons.panorama_fish_eye,
@@ -161,28 +155,15 @@ class CameraPageState extends State<CameraPage> {
   }
 }
 /*
-sizedBox(
-height: 4,
-), // sizedBox
-Text(
-"Hold for video, tap for photo",
-stvle: Textstulet
-color: Colors.white,)
-), // Container
-), / Positioned
-]
-        /*ElevatedButton(
-          onPressed: () async {
-            pictureFile = await controller.takePicture();
-            setState(() {});
-          },
-          child: const Text('Capture Image'),
-        ),
-        Padding(
-        padding: const EdgeInsets.all(8.0),
-        child:*/
-
-        /*
-      ),*/
-        //if (pictureFile != null) Image.file(File(pictureFile.path)),
-      */
+final size = MediaQuery.of(context).size;
+final deviceRatio = size.width / size.height;
+return Transform.scale(
+  scale: controller.value.aspectRatio / deviceRatio,
+  child: Center(
+    child: AspectRatio(
+      aspectRatio: controller.value.aspectRatio,
+      child: CameraPreview(controller),
+    ),
+  ),
+);
+*/ 

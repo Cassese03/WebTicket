@@ -36,6 +36,29 @@ class CameraViewPage extends StatelessWidget {
     }
   }
 
+  Future<http.Response> sendPath(text, path, contatto, token) async {
+    final response = await http.post(
+      Uri.parse('https://centralino.gamwki.it/api/crea_ticket/' + token),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'messaggio': text,
+        'contatto': contatto,
+        'allegato': path,
+      }),
+    );
+    if (response.statusCode == 200) {
+      // If the server did return a 201 CREATED response,
+      // then parse the JSON.
+      return response;
+    } else {
+      // If the server did not return a 201 CREATED response,
+      // then throw an exception.
+      return response;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     TextEditingController firstNameController = TextEditingController();
@@ -128,12 +151,17 @@ class CameraViewPage extends StatelessWidget {
                             print(firstNameController.text);
                             print(contatto);
                             print(token);*/
-                            var risposta = await sendTicket(
+                            /*var risposta = await sendTicket(
                                 firstNameController.text,
                                 contatto,
                                 token,
-                                path2);
+                                path2);*/
                             // ignore: unrelated_type_equality_checks
+                            var risposta = await sendPath(
+                                firstNameController.text,
+                                path2,
+                                contatto,
+                                token);
                             if (risposta.statusCode == 200 ||
                                 risposta.statusCode == 201) {
                               showDialog(

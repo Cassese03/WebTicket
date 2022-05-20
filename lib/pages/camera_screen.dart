@@ -20,7 +20,7 @@ class CameraPageState extends State<CameraPage> {
   XFile pictureFile;
 
   Future pickImage() async {
-    final image = await ImagePicker().getImage(source: ImageSource.gallery);
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (image == null) return;
     Navigator.push(
         context,

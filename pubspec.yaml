@@ -29,10 +29,12 @@ dependencies:
   cupertino_icons: ^1.0.4
   email_validator: ^2.0.1
   http: ^0.13.4
-  flutter_session: ^0.1.1
   camera: ^0.9.1+1
   story_view: ^0.12.8
   image_picker: ^0.8.0+4
+  permission_handler: ^8.1.2
+  flutter_sound_lite: ^8.1.9
+  audioplayers:
 
 dev_dependencies:
   flutter_test:

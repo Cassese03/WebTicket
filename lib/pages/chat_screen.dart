@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import '../models/chat_model.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'open_chat_screen.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -18,7 +17,8 @@ class ChatScreenState extends State<ChatScreen> {
   List<ChatModel> _notes = List<ChatModel>();
 
   Future<List<ChatModel>> fetchNotes() async {
-    var token = await FlutterSession().get("token");
+    //var token = await FlutterSession().get("token");
+    var token = 'mDLKbai0cQwLl6F4x3mNVAFFHMiucVPdj3h3ahHYksM2TYZTIa';
 
     var url = 'https://centralino.gamwki.it/api/ticket_aperti/' + token;
 
@@ -62,7 +62,8 @@ class ChatScreenState extends State<ChatScreen> {
           new ListTile(
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => new ChatScreen23(token: 'ciao')),
+              MaterialPageRoute(
+                  builder: (context) => new ChatScreen23(token: 'ciao')),
             ),
             leading: new CircleAvatar(
               foregroundColor: Theme.of(context).primaryColor,

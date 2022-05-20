@@ -18,6 +18,7 @@ class CameraPage extends StatefulWidget {
 class CameraPageState extends State<CameraPage> {
   CameraController controller;
   XFile pictureFile;
+  bool flash = false;
 
   Future pickImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -43,7 +44,9 @@ class CameraPageState extends State<CameraPage> {
       if (!mounted) {
         return;
       }
-      setState(() {});
+      setState(() {
+        controller.setFlashMode(FlashMode.off);
+      });
     });
   }
 
@@ -63,26 +66,48 @@ class CameraPageState extends State<CameraPage> {
       );
     }
 
-    final size = MediaQuery.of(context).size;
-    final deviceRatio = size.width / size.height;
+    //final size = MediaQuery.of(context).size;
+    //final deviceRatio = size.width / size.height;
 
     return SafeArea(
       child: Material(
           child: Stack(
         children: [
-          Transform.scale(
-            scale: controller.value.aspectRatio / deviceRatio,
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: controller.value.aspectRatio,
-                child: CameraPreview(controller),
+          Positioned(
+            top: 0.0,
+            child: Container(
+              color: Colors.black,
+              padding: EdgeInsets.only(top: 5.0, bottom: 5.0),
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: 20.0,
+                        height: 78.0,
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.arrow_back_sharp,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
-          /*
           Center(
             child: CameraPreview(controller),
-          ),*/
+          ),
           Positioned(
             bottom: 0.0,
             child: Container(
@@ -138,11 +163,23 @@ class CameraPageState extends State<CameraPage> {
                       ),
                       IconButton(
                           icon: Icon(
-                            Icons.flip_camera_ios,
+                            flash ? Icons.flash_on : Icons.flash_off,
                             color: Colors.white,
                             size: 28,
                           ),
-                          onPressed: () {}), // IconButton
+                          onPressed: () {
+                            if (flash) {
+                              controller.setFlashMode(FlashMode.off);
+                              setState(() {
+                                flash = !flash;
+                              });
+                            } else {
+                              controller.setFlashMode(FlashMode.torch);
+                              setState(() {
+                                flash = !flash;
+                              });
+                            }
+                          }), // IconButton
                     ],
                   ),
                 ],
@@ -166,4 +203,14 @@ return Transform.scale(
     ),
   ),
 );
-*/ 
+*/
+/*
+          Transform.scale(
+            scale: controller.value.aspectRatio / deviceRatio,
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: controller.value.aspectRatio,
+                child: CameraPreview(controller),
+              ),
+            ),
+          ),*/

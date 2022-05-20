@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutterwhatsapp/models/login_data.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:camera/camera.dart';
 import 'package:flutterwhatsapp/pages/open_chat_screen.dart';
 //import 'package:flutterwhatsapp/whatsapp_home.dart';
@@ -92,65 +93,115 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        // ignore: deprecated_member_use
-                        List<LoginData> _session = List<LoginData>();
-                        await fetchLogin(numero).then((value) {
-                          _session.addAll(value);
-                        });
-                        if (_session.isNotEmpty) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => new ChatScreen23(
-                                    token: _session[0].token.toString(),
-                                    contatto: _session[0].contatto.toString())),
-                          );
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 24, vertical: 30),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        const Text("Errore!",
-                                            textAlign: TextAlign.right,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                        const Text(
-                                            "Non riusciamo ad associare il numero selezionato ad un nostro cliente.",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                        const SizedBox(
-                                          height: 16,
-                                        ),
-                                        MaterialButton(
-                                          onPressed: () async {
-                                            setState(() {});
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("Riprova"),
-                                          color: Color.fromARGB(
-                                              174, 140, 235, 123),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          minWidth: double.infinity,
-                                        ),
-                                      ],
+                      bool internet =
+                          await InternetConnectionChecker().hasConnection;
+                      if (internet) {
+                        if (_formKey.currentState.validate()) {
+                          // ignore: deprecated_member_use
+                          List<LoginData> _session = List<LoginData>();
+                          await fetchLogin(numero).then((value) {
+                            _session.addAll(value);
+                          });
+                          if (_session.isNotEmpty) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => new ChatScreen23(
+                                      token: _session[0].token.toString(),
+                                      contatto:
+                                          _session[0].contatto.toString())),
+                            );
+                          } else {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 24, vertical: 30),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          const Text("Errore!",
+                                              textAlign: TextAlign.right,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                          const Text(
+                                              "Non riusciamo ad associare il numero selezionato ad un nostro cliente.",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                          const SizedBox(
+                                            height: 16,
+                                          ),
+                                          MaterialButton(
+                                            onPressed: () async {
+                                              setState(() {});
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text("Riprova"),
+                                            color: Color.fromARGB(
+                                                174, 140, 235, 123),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            minWidth: double.infinity,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              });
+                                  );
+                                });
+                          }
                         }
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 30),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      const Text("Errore!",
+                                          textAlign: TextAlign.right,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                      const Text(
+                                          "Non sei connesso ad Internet.",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                      const SizedBox(
+                                        height: 16,
+                                      ),
+                                      MaterialButton(
+                                        onPressed: () async {
+                                          setState(() {});
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("Riprova"),
+                                        color:
+                                            Color.fromARGB(174, 140, 235, 123),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                        minWidth: double.infinity,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
                       }
                     },
                     style: ElevatedButton.styleFrom(

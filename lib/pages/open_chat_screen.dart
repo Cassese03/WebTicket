@@ -24,6 +24,7 @@ import 'package:flutter_sound_lite/public/util/wave_header.dart';*/
 //import 'package:flutter_session/flutter_session.dart';
 //import '../models/login_data.dart';
 
+// ignore: must_be_immutable
 class ChatScreen23 extends StatefulWidget {
   final User user;
   final String token;
@@ -57,8 +58,11 @@ class _ChatScreenState extends State<ChatScreen23> {
         position = newPosition;
       });
     });
+
     audioplayer.onPlayerCompletion.listen((wow) {
-      widget.isPlaying = false;
+      setState(() {
+        widget.isPlaying = false;
+      });
     });
   }
 
@@ -202,7 +206,6 @@ class _ChatScreenState extends State<ChatScreen23> {
     String text = '';
     bool isRecording = recorder.isRecording;
     bool recorded = widget.recorded;
-    bool isPlaying = widget.isPlaying;
 
     /*
     IconButton(
@@ -462,13 +465,15 @@ class _ChatScreenState extends State<ChatScreen23> {
           children: <Widget>[
             IconButton(
               icon: (widget.isPlaying)
-                  ? Icon(Icons.stop)
+                  ? Icon(Icons.pause)
                   : Icon(Icons.play_arrow),
               iconSize: 30.0,
               onPressed: () async {
                 if (widget.isPlaying == true) {
                   await audioplayer.pause();
-                  widget.isPlaying = false;
+                  setState(() {
+                    widget.isPlaying = false;
+                  });
                 } else {
                   await audioplayer.play(
                       '/data/user/0/com.example.flutterwhatsapp/cache/audio_example.aac');
@@ -487,10 +492,10 @@ class _ChatScreenState extends State<ChatScreen23> {
                 ),
                 child: Slider.adaptive(
                   min: 0,
-                  max: duration.inSeconds.toDouble(),
-                  value: position.inSeconds.toDouble(),
+                  max: duration.inMicroseconds.toDouble(),
+                  value: position.inMicroseconds.toDouble(),
                   onChanged: (value) async {
-                    Duration(seconds: value.toInt());
+                    Duration(microseconds: value.toInt());
                   },
                 ),
               ),
@@ -515,7 +520,6 @@ class _ChatScreenState extends State<ChatScreen23> {
                 ),
               ),*/
             ),
-            Text('data'),
             IconButton(
                 icon: Icon(Icons.send),
                 iconSize: 25.0,

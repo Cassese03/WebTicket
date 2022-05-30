@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,7 @@ class _ChatScreenState extends State<ChatScreen23> {
     }
   }
 
-  Future<http.Response> sendPath(text, path, contatto, token) async {
+  Future<http.Response> sendPath(text, path1, contatto, token) async {
     final response = await http.post(
       Uri.parse('https://centralino.gamwki.it/api/crea_ticket/' + token),
       headers: <String, String>{
@@ -105,7 +106,7 @@ class _ChatScreenState extends State<ChatScreen23> {
       body: jsonEncode(<String, String>{
         'messaggio': text,
         'contatto': contatto,
-        'allegato': path,
+        'vocale': path1,
       }),
     );
     if (response.statusCode == 200) {
@@ -203,7 +204,6 @@ class _ChatScreenState extends State<ChatScreen23> {
   _buildMessageComposer() {
     String token = widget.token;
     String contatto = widget.contatto;
-    String text = '';
     bool isRecording = recorder.isRecording;
     bool recorded = widget.recorded;
 
@@ -294,7 +294,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                 textCapitalization: TextCapitalization.sentences,
                 onChanged: (value) {
                   text = value;
-                  if (text != '')
+                  if (text != null)
                     setState(() {
                       isWriting = true;
                     });
@@ -314,7 +314,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                 color:
                     isRecording ? Colors.red : Theme.of(context).primaryColor,
                 onPressed: () async {
-                  if (text != '' && isWriting == true) {
+                  if (text != null && isWriting == true) {
                     var risposta = await sendTicket(text, contatto, token);
                     // ignore: unrelated_type_equality_checks
                     if (risposta.statusCode == 200 ||
@@ -402,48 +402,49 @@ class _ChatScreenState extends State<ChatScreen23> {
                             );
                           });
                     }
-                  } else {
-                    /*
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 24, vertical: 30),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                const Text("Errore!",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                const Text(
-                                    "Impossibile mandare un ticket vuoto",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                const SizedBox(
-                                  height: 16,
-                                ),
-                                MaterialButton(
-                                  onPressed: () async {
-                                    setState(() {});
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("Riprova"),
-                                  color: Color.fromARGB(174, 140, 235, 123),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8)),
-                                  minWidth: double.infinity,
-                                ),
-                              ],
+                  } /*else {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 24, vertical: 30),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const Text("Errore!",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  const Text(
+                                      "Impossibile mandare un ticket vuoto",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  const SizedBox(
+                                    height: 16,
+                                  ),
+                                  MaterialButton(
+                                    onPressed: () async {
+                                      setState(() {});
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Riprova"),
+                                    color: Color.fromARGB(174, 140, 235, 123),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8)),
+                                    minWidth: double.infinity,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      });*/
+                          );
+                        });
+                  }*/
+                  if (text == null && isWriting == false) {
                     final isRecording = await recorder.toggleRecording();
                     if (isRecording != null) {
                       setState(() {
@@ -451,7 +452,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                       });
                     } else
                       setState(() {});
-                  }
+                  } else {}
                 }),
           ],
         ),
@@ -476,7 +477,7 @@ class _ChatScreenState extends State<ChatScreen23> {
                   });
                 } else {
                   await audioplayer.play(
-                      '/data/user/0/com.example.flutterwhatsapp/cache/audio_example.aac');
+                      '/data/user/0/com.example.flutterwhatsapp/cache/audio_example.mp4');
                   setState(() {
                     widget.isPlaying = true;
                   });
@@ -527,9 +528,12 @@ class _ChatScreenState extends State<ChatScreen23> {
                 onPressed: () async {
                   if (widget.recorded == true) {
                     String path =
-                        '/data/user/0/com.example.flutterwhatsapp/cache/audio_example.aac';
+                        '/data/user/0/com.example.flutterwhatsapp/cache/audio_example.mp4';
+                    File file = File(path);
+                    List<int> fileBytes = await file.readAsBytes();
+                    String path1 = base64Encode(fileBytes);
                     text = 'Vocale da App';
-                    var risposta = await sendPath(text, path, contatto, token);
+                    var risposta = await sendPath(text, path1, contatto, token);
                     // ignore: unrelated_type_equality_checks
                     if (risposta.statusCode == 200 ||
                         risposta.statusCode == 201) {

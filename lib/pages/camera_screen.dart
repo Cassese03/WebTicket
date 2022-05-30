@@ -38,7 +38,7 @@ class CameraPageState extends State<CameraPage> {
     super.initState();
     controller = CameraController(
       widget.cameras[0],
-      ResolutionPreset.veryHigh,
+      ResolutionPreset.high,
     );
     controller.initialize().then((_) {
       if (!mounted) {

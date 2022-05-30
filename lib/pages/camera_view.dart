@@ -45,9 +45,10 @@ class CameraViewPage extends StatelessWidget {
       body: jsonEncode(<String, String>{
         'messaggio': text,
         'contatto': contatto,
-        'allegato': path,
+        'immagine': path,
       }),
     );
+    print(response.body);
     if (response.statusCode == 200) {
       // If the server did return a 201 CREATED response,
       // then parse the JSON.
@@ -164,6 +165,7 @@ class CameraViewPage extends StatelessWidget {
                                 token);
                             if (risposta.statusCode == 200 ||
                                 risposta.statusCode == 201) {
+                              print(risposta.body);
                               showDialog(
                                   context: context,
                                   builder: (context) {

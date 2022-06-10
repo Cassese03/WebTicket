@@ -36,6 +36,8 @@ dependencies:
   flutter_sound_lite: ^8.1.9
   audioplayers:
   internet_connection_checker:
+  sqflite: ^2.0.2+1
+  path_provider: ^2.0.10
 
 dev_dependencies:
   flutter_test:
